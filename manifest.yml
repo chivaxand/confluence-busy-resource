@@ -1,0 +1,27 @@
+modules:
+  macro:
+    - key: busyresource
+      resource: main
+      resolver:
+        function: resolver
+      title: BusyResource
+      description: A tool for managing resources usage
+      config:
+        function: config
+  function:
+    - key: resolver
+      handler: index.handler
+    - key: config
+      handler: config.run
+resources:
+  - key: main
+    path: static/build
+app:
+  id: ari:cloud:ecosystem::app/f41e2d6e-d1f4-48ac-a565-dc0d9bbf20e1
+permissions:
+  scopes:
+    - storage:app
+    - read:confluence-user
+  content:
+    styles:
+      - 'unsafe-inline'

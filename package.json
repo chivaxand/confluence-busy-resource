@@ -1,0 +1,29 @@
+{
+  "name": "confluence-macro-custom-ui",
+  "version": "1.0.36",
+  "config":{
+    "workspace" : "example.atlassian.net"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  },
+  "dependencies": {
+    "@forge/resolver": "1.5.25",
+    "@forge/ui": "1.10.2",
+    "@forge/api": "^2.6.0"
+  },
+  "scripts": {
+    "setup": "npm install && npm run static-build",
+    "static-build": "cd ./static && npm install && npm run build && cd ..",
+    "forge-deploy": "forge deploy",
+    "install-first": "source .env && forge install --confirm-scopes -p Confluence -s ${FORGE_WORKSPACE}",
+    "install-update": "source .env && forge install --upgrade --confirm-scopes -p Confluence -s ${FORGE_WORKSPACE}",
+    "install-prod-first": "source .env && forge deploy -e production && forge install --confirm-scopes -p Confluence -e production -s ${FORGE_WORKSPACE}",
+    "install-prod-update": "source .env && forge deploy -e production && forge install --upgrade --confirm-scopes -p Confluence -e production -s ${FORGE_WORKSPACE}",
+    "deploy": "npm run static-build && npm run forge-deploy && npm run install-update"
+  }
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>QA Environments</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+body	{ margin:0;padding:0;background:#fff;color:#394575;font-size:13pt;text-align:left;font-family:Tahoma; }
+p		{ margin:3px 0;padding:0 }
+h1		{ font-size:22pt;text-align:center }
+h2		{ font-size:16pt }
+h3		{ font-size:12pt }
+.main	{ padding:10px;margin:0px; }
+input[type="text"],
+input[type="number"],
+input[type="password"]	{ color:#303030;font-size:13pt;border:1px solid #ccc;border-radius:3px;background:#fff!important;outline:0;height:24pt;width:300px;margin:5pt 5pt 5pt 0;padding:0 5pt 0 5pt}
+input[type="checkbox"]	{ zoom:1.5; margin: -2px 4px 0 0; vertical-align: middle;}
+input[type="radio"]		{ zoom:1.5;margin:0 2px 0 0}
+input[type="button"],
+input[type="submit"]	{ color:#fff; font-size:13pt; border:0; border-radius:4px; background:#0087d9; outline:0; height:28pt; min-width:50pt; margin:5pt 5pt 5pt 0; padding:0 10pt 0 10pt; }
+.checkBoxParent label	{ display:flex;align-items:center}
+.radioParent label		{ display:flex;align-items:center}
+input.small				{ width:100pt}
+textarea				{ color:#303030;font-size:13pt;margin:5pt 5pt 5pt 0;padding:0 5pt 0 5pt;border:1px solid #ccc;border-radius:3px;background:#fff!important;outline:0;width:900px;height:100px;white-space:nowrap;}
+select					{ color:#303030;font-size:13pt;margin:5pt 5pt 5pt 0;padding:0 5pt 0 5pt;border:1px solid #ccc;border-radius:3px;background:#fff!important;outline:0}
+.checkBoxParent label	{ display:flex;align-items:center}
+.radioParent label		{ display:flex;align-items:center}
+.input-group          	{ display: flex; flex-direction: column; margin-bottom: 20px; }
+.button-group         	{ display: flex; justify-content: space-between; margin-top: 20px; }
+button                	{ padding: 10px; background-color: #4f5fbd; color: white; border: none; border-radius: 5px; cursor: pointer; }
+button:hover          	{ background-color: #384487; }
+.input-group 		 	{ margin-bottom: 15px; text-align: left; }
+.input-group title		{ display: block; font-weight: normal; margin-bottom: 5px; }
+p.title					{ font-weight: bold; }
+table 					{ border-collapse: collapse; }
+th, td 					{ border: 1px solid #ccc; padding: 5px 10px; text-align: left; }
+th 						{ text-align: center; background-color: #eee; }
+td.center 				{ text-align: center; }
+table tr.used td		{ background-color: #ff000010; }
+table tr.selected td	{ background-color: #0087d920; }
+hr 						{ margin: 30px 0; border: 0px; border-top: 1px solid #ccc; }
+</style>
+<script type="text/javascript" src="loaderAnimation.js"></script>
+<script type="text/javascript" src="serverApi.js"></script>
+<script type="text/javascript" src="manager.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript">
+window.onerror = function(message, source, lineno, colno, error) {
+	setTimeout(function() {
+		if (document.body.oldColor == undefined) {
+			document.body.oldColor = document.body.style.background;
+		}
+		document.body.style.background = "#d55";
+		setTimeout(function(){
+			document.body.style.background = document.body.oldColor;
+			alert("Error ("+lineno+':'+colno+'): '+message);
+		}, 300)
+	}, 10);
+};
+</script>
+</head>
+	
+<body>
+<div class="main">
+	<table id="envTable">
+		<thead>
+		  <tr>
+			<th>Environment</th>
+			<th>State</th>
+			<th>User</th>
+			<th>Used from date</th>
+			<th>Estimated busy time</th>
+			<th>Comment</th>
+		  </tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+	<hr>
+	<div id="envInfo" style="display: none;">
+		<p class="title">Environment: <span id="selectedEnvTitle"></span></p>
+		<br>
+		<div id="use-env-cnt" style="display: none;">
+			<div class="input-group">
+				<title>Estimated environment busy time (hours):</title>
+				<input type="text" name="hours" value="12" />
+			</div>
+			<div class="input-group">
+				<title>Comment (task number, feature name, etc.):</title>
+				<input type="text" name="comment" value="" />
+			</div>
+			<input type="button" value="Use this environment" data-onclick="useSelectedEnv" />
+		</div>
+		<div id="change-env-cnt" style="display: none;">
+			<input type="button" value="Change busy time" data-onclick="changeTimeForSelectedEnv" />
+			<input type="button" value="Make environment free" data-onclick="makeSelectedEnvFree" />
+		</div>
+		<br><br>
+		<p class="title">Changes history:</p>
+		<br>
+		<table id="historyTable">
+			<thead>
+			  <tr>
+				<th>Date</th>
+				<th>User</th>
+				<th>Comment</th>
+			  </tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+</div>
+<div id="root"></div>
+</body>
+</html>
