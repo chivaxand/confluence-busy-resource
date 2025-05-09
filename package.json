@@ -17,13 +17,11 @@
     "@forge/api": "^2.6.0"
   },
   "scripts": {
-    "setup": "npm install && npm run static-build",
-    "static-build": "cd ./static && npm install && npm run build && cd ..",
-    "forge-deploy": "forge deploy",
-    "install-first": "source .env && forge install --confirm-scopes -p Confluence -s ${FORGE_WORKSPACE}",
-    "install-update": "source .env && forge install --upgrade --confirm-scopes -p Confluence -s ${FORGE_WORKSPACE}",
-    "install-prod-first": "source .env && forge deploy -e production && forge install --confirm-scopes -p Confluence -e production -s ${FORGE_WORKSPACE}",
-    "install-prod-update": "source .env && forge deploy -e production && forge install --upgrade --confirm-scopes -p Confluence -e production -s ${FORGE_WORKSPACE}",
-    "deploy": "npm run static-build && npm run forge-deploy && npm run install-update"
+    "build": "npm install && npm run build-static",
+    "build-static": "cd ./static && npm install && npm run build && cd ..",
+    "deploy": "npm run build && forge deploy",
+    "deploy-prod": "npm run build && forge deploy -e production",
+    "install-dev": "npm run deploy && ./install.sh dev",
+    "install-prod": "npm run deploy-prod && ./install.sh prod"
   }
 }

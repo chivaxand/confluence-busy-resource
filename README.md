@@ -1,66 +1,83 @@
-# Resource management for Confluence
+# Resource Management for Confluence
 
-A tool for managing environments usage - free / busy.
+This Confluence macro app, **BusyResource**, helps teams manage resource availability (e.g., environments, servers) by marking them as free or busy. Built using Atlassian Forge, it integrates seamlessly with Confluence pages.
+
 ![11](img1.png)
 
-## Create token
-- Go to https://id.atlassian.com/manage/api-tokens
-- Click Create API token, copy token
+## Overview
 
-## Create workspace:
-http://go.atlassian.com/cloud-dev
+The **BusyResource** app allows Confluence users to track and manage resource usage. Users can add the macro to any Confluence page, configure resources (e.g., QA1, QA2), and view their availability.
 
-Example:
+## Prerequisites
 
-https://example.atlassian.net/wiki/spaces
+Before installing, ensure you have the following:
 
-https://example.atlassian.net/jira
+- **Node.js**: Version 22.x. Verify with:
+  ```bash
+  node -v
+  ```
+- **Forge CLI**: Install globally using:
+  ```bash
+  npm install -g @forge/cli
+  forge --version
+  ```
+- **Atlassian Account**: Access to a Confluence Cloud workspace (e.g., `https://example.atlassian.net`).
+- **API Token**: Generate one at [Atlassian API Tokens](https://id.atlassian.com/manage/api-tokens).
+- **Workspace**: Create or access a Confluence workspace at [Atlassian Cloud](http://go.atlassian.com/cloud-dev).
 
-## Install forge client
-```shell
-node -v
-npm install -g @forge/cli
-forge --version
-```
+## Installation
 
-## Login (enter email and token)
-```shell
-forge logout
-forge login
-```
+Follow these steps to set up and deploy the app:
 
-## Prepare app
-```shell
-npm run setup
-forge register BusyResource
-```
+1. **Clone the Repository**:
+   ```bash
+   git clone <repository-url> BusyResource
+   cd BusyResource
+   ```
 
-App will be created at `https://developer.atlassian.com/console/myapps`
+2. **Log in to Forge**:
+   Use your Atlassian email and API token:
+   ```bash
+   forge login
+   ```
 
-Specify workspace by using script `add-workspace.sh` or create `.env` file with workspace name manually:
-```
-FORGE_WORKSPACE=example.atlassian.net
-```
+3. **Set Up Workspace**:
+   Create a `.env` file with your Confluence workspace:
+   ```bash
+   echo "FORGE_WORKSPACE=example.atlassian.net" > .env
+   ```
+   Replace `example.atlassian.net` with your workspace URL.
 
-## build and deploy for the first time
-```shell
-npm run forge-deploy
-npm run install-prod-first
-```
+4. **Install Dependencies and Build**:
+   ```bash
+   npm run build
+   ```
 
-App will be installed to workspace.
-Installed apps list: `https://example.atlassian.net/wiki/plugins/servlet/upm`
+5. **Register the App**:
+   Register the app with Forge:
+   ```bash
+   forge register BusyResource
+   ```
+   The app will appear in your [Atlassian Developer Console](https://developer.atlassian.com/console/myapps).
 
-## Installation for development (if needed)
-```shell
-npm run forge-deploy
-npm run install-first
-```
+6. **Deploy the App**:
+   Deploy to your Confluence workspace:
+   ```bash
+   npm run install-prod
+   ```
+   For development, use:
+   ```bash
+   npm run install-dev
+   ```
 
-For update DEV app:
-```shell
-npm run deploy
-```
+7. **Enable App Sharing**:
+   To make the app accessible to all users in your workspace without requiring individual access requests:
+   - Go to the [Atlassian Developer Console](https://developer.atlassian.com/console/myapps)
+   - Select your app from the list.
+   - Navigate to: Distribution > Edit
+   - Under "Sharing", enable sharing with all users.
+   - Click "Save changes".
+
 
 ## Add app to page
 Go to any workspace page (`https://example.atlassian.net/wiki/spaces`), press edit page, and type (do not copy):

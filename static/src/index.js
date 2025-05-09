@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { useEffect, useState } from 'react';
 import { invoke } from '@forge/bridge';
+import ForgeReconciler from '@forge/react';
+import Config from './config';
 
 console.log("App started");
 
@@ -18,5 +20,9 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+ForgeReconciler.addConfig(<Config />);
+
 window.app = window.app || {};
 window.app.invoke = invoke;
+
+export default App;
